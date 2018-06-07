@@ -23,7 +23,7 @@ Run migration
 ```bash
 php artisan migrate
 ```
-##Config File
+## Config File
 Configuration file information
 
 ```php
@@ -63,7 +63,7 @@ return [
 ];
 ```
 
-##Usage
+## Usage
 Add `AclGuarded` Trait to your user model
 ```php
 use Illuminate\Notifications\Notifiable;
@@ -90,15 +90,15 @@ $user->hasPermission($permission) // $permission can be string, ID, or Permissio
 You can also use permissions in blade directives
 ```php
 @can('manage-acl')
-    <!-- The Current User Can Manage Acl -->
+    // The Current User Can Manage Acl
 @elsecan('manage-users')
-    <!-- The Current User Can Manage Users -->
+    // The Current User Can Manage Users
 @endcan
 
 // OR
 
 @if (Auth::user()->can('manage-acl'))
-    <!-- The Current User Can Manage Acl -->
+    // The Current User Can Manage Acl
 @endif
 
 ```
@@ -120,6 +120,7 @@ $factory->define(\Gurinder\LaravelAcl\Package\Models\Permission::class, function
     ];
 });
 ```
+Make Seeder Class
 
 ```php
 use Gurinder\LaravelAcl\Package\Models\Permission;
