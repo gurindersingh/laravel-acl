@@ -41,6 +41,9 @@ return [
     // Route name as e.g use -> route('admin.roles.index')
     'route_as' => 'admin.',
 
+    // Master roles - All new permission will be added to these roles automatically.
+    'master_roles' => ['admin'],
+
     // Roles which are not editable
     'freezed_roles' => ['admin'],
     
