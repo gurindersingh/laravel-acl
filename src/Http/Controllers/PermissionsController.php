@@ -44,10 +44,12 @@ class PermissionsController extends Controller
             'roles.*'         => 'exists:roles,id'
         ]);
 
-        Permission::create([
+        $permission = Permission::create([
             'name' => $request->permission_name,
             'slug' => $slug
         ]);
+
+        $this->assignPermissionToMasterRoles($permission);
 
         $ledger->reset();
 
@@ -67,5 +69,24 @@ class PermissionsController extends Controller
         $ledger->reset();
 
         return redirect()->route(config('acl.route_as') . 'permissions.index');
+    }
+
+    protected function assignPermissionToMasterRoles($permission)
+    {
+        $roles = config('acl.master_roles');
+
+        if(is_array($roles)) {
+            foreach ($roles as $role) {
+                if($role = Role::whereSlug($role)->first()) {
+                    $role->permissions()->attach($permission->id);
+                }
+            }
+        }
+
+        if(is_string($roles)) {
+            if($role = Role::whereSlug($role)->first()) {
+                $role->permissions()->attach($permission->id);
+            }
+        }
     }
 }

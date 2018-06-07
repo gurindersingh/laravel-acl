@@ -10,6 +10,8 @@ return [
 
     'route_as' => 'admin.',
 
+    'master_roles' => ['admin'],
+
     'freezed_roles' => ['admin'],
 
     'freezed_permissions' => ['manage-acl', 'manage-users'],

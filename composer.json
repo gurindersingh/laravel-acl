@@ -1,7 +1,7 @@
 {
   "name": "gurinder/laravel-acl",
   "description": "Laravel Roles And Permissions with UI",
-  "keywords" : [
+  "keywords": [
     "laravel",
     "permission",
     "acl",
@@ -33,10 +33,6 @@
     "phpunit/phpunit": "^7.0"
   },
   "autoload": {
-    "classmap": [
-      "src/routes",
-      "src/database/migrations"
-    ],
     "psr-4": {
       "Gurinder\\LaravelAcl\\": "src"
     }
