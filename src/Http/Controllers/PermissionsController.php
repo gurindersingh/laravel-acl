@@ -3,6 +3,7 @@
 namespace Gurinder\LaravelAcl\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Gurinder\LaravelAcl\Package\Models\Role;
 use Gurinder\LaravelAcl\Package\Models\Permission;
 use Gurinder\LaravelAcl\Contracts\AclLedgerContract;
 
