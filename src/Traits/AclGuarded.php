@@ -67,16 +67,16 @@ trait AclGuarded
     {
         $userAcl = resolve(AclLedgerContract::class)->getUserAcl($this);
 
-        if ($role instanceof Role) {
-            return in_array($role->slug, $userAcl['roles']);
-        }
-
-        if (is_numeric($role)) {
-            return in_array(Role::whereId($role)->firstOrFail()->slug, $userAcl['roles']);
-        }
-
         if (is_string($role)) {
             return in_array($role, $userAcl['roles']);
+        }
+
+        if ($role instanceof Role && $slug = $role->slug) {
+            return in_array($slug, $userAcl['roles']);
+        }
+
+        if (is_numeric($role) && $slug = optional(Role::whereId($role)->first())->slug) {
+            return in_array($slug, $userAcl['roles']);
         }
 
         return false;
