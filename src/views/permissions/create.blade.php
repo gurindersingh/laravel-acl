@@ -1,6 +1,6 @@
 @extends('acl::acl-master')
 
-@section('acl:content')
+@section('acl::content')
 	
 	<div class="container mt-5">
 		

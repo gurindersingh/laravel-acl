@@ -81,7 +81,7 @@ class AclLedger implements AclLedgerContract
 
         });
 
-        return $this->usersAcl[$user->id];
+        return isset($this->usersAcl[$user->id]) ? $this->usersAcl[$user->id] : [];
     }
 
     /**

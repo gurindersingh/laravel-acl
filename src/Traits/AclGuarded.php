@@ -3,9 +3,9 @@
 namespace Gurinder\LaravelAcl\Traits;
 
 
-use Gurinder\LaravelAcl\Contracts\AclLedgerContract;
-use Gurinder\LaravelAcl\Package\Models\Permission;
 use Gurinder\LaravelAcl\Package\Models\Role;
+use Gurinder\LaravelAcl\Package\Models\Permission;
+use Gurinder\LaravelAcl\Contracts\AclLedgerContract;
 
 trait AclGuarded
 {
@@ -25,6 +25,37 @@ trait AclGuarded
         $this->roles()->detach();
 
         return $this->roles()->sync($roles);
+    }
+
+    /**
+     * @param Role|integer $roles |string $roles|array $roles
+     *
+     * @return Roleable
+     */
+    public function assignRole($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                $this->assignSingleRole($role);
+            }
+        } else {
+            return $this->assignSingleRole($roles);
+        }
+    }
+
+    protected function assignSingleRole($role)
+    {
+        if ($role instanceof Role) {
+            return $this->roles()->attach($role->id);
+        }
+
+        if (is_numeric($role) && $role = Role::whereId($role)->first()) {
+            return $this->roles()->attach($role->id);
+        }
+
+        if (is_string($role) && $role = Role::whereSlug($role)->first()) {
+            return $this->roles()->attach($role->id);
+        }
     }
 
     /**
@@ -65,7 +96,7 @@ trait AclGuarded
         }
 
         if (is_string($permission)) {
-            return in_array($permission, $userAcl['permissions']);
+            return in_array($permission, optional($userAcl)['permissions'] ?? []);
         }
 
         return false;

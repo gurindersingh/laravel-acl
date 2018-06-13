@@ -33,7 +33,9 @@ class AclRegistrar implements AclRegistrarContract
 
     protected function checkIfUserHasPermission($permissionSlug, $user)
     {
-        return in_array($permissionSlug, $this->ledger->getUserAcl($user)['permissions']);
+        $permissions = optional($this->ledger->getUserAcl($user))['permissions'] ?? [];
+
+        return in_array($permissionSlug, $permissions);
     }
 
 }
