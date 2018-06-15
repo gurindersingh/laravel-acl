@@ -24,10 +24,12 @@ class AclRegistrar implements AclRegistrarContract
     {
         $permissions = $this->ledger->getPermissions();
 
-        foreach ($permissions as $permission) {
-            Gate::define($permission->slug, function (Authenticatable $user) use ($permission) {
-                return $user ? $this->checkIfUserHasPermission($permission->slug, $user) : false;
-            });
+        if (is_array($permissions)) {
+            foreach ($permissions as $permission) {
+                Gate::define($permission->slug, function (Authenticatable $user) use ($permission) {
+                    return $user ? $this->checkIfUserHasPermission($permission->slug, $user) : false;
+                });
+            }
         }
     }
 

@@ -5,6 +5,7 @@ namespace Gurinder\LaravelAcl\Repositories;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use Gurinder\LaravelAcl\Package\Models\Role;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Gurinder\LaravelAcl\Package\Models\Permission;
@@ -44,6 +45,9 @@ class AclLedger implements AclLedgerContract
     public function getPermissions($paginate = false, $page = 1, $perPage = 15)
     {
         $permissions = Cache::remember($this->getCacheKey('permissions'), $this->getExpiration(), function () {
+
+            if (!Schema::hasTable('permissions')) return null;
+
             return Permission::orderBy('name')->with([
                 'roles' => function ($query) {
                     $query->orderBy('name');
@@ -51,7 +55,11 @@ class AclLedger implements AclLedgerContract
             ])->get();
         });
 
-        return $paginate ? $this->paginate($permissions, $page, $perPage, ['path' => request()->getBaseUrl()]) : $permissions;
+        if ($permissions) {
+            return $paginate ? $this->paginate($permissions, $page, $perPage, ['path' => request()->getBaseUrl()]) : $permissions;
+        }
+
+        return null;
 
     }
 
