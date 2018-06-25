@@ -3,10 +3,9 @@
 namespace Gurinder\LaravelAcl;
 
 
-use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Gurinder\LaravelAcl\Repositories\AclLedger;
 use Gurinder\LaravelAcl\Repositories\AclRegistrar;
@@ -49,7 +48,7 @@ class AclServiceProvider extends ServiceProvider
             $this->app['router']->aliasMiddleware('checkPermission', CheckPermission::class);
 
         }
-        
+
     }
 
     /**
