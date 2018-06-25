@@ -6,6 +6,7 @@ namespace Gurinder\LaravelAcl;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Gurinder\LaravelAcl\Repositories\AclLedger;
 use Gurinder\LaravelAcl\Repositories\AclRegistrar;
@@ -24,10 +25,10 @@ class AclServiceProvider extends ServiceProvider
             __DIR__ . '/config/acl.php' => config_path('acl.php')
         ], 'acl::config');
 
-        if (! class_exists('CreateAclTables')) {
+        if (!class_exists('CreateAclTables')) {
             $timestamp = date('Y_m_d_His', time());
             $this->publishes([
-                __DIR__ . '/Database/migrations/create_acl_tables.php.stub' => $this->app->databasePath()."/migrations/{$timestamp}_create_acl_tables.php",
+                __DIR__ . '/Database/migrations/create_acl_tables.php.stub' => $this->app->databasePath() . "/migrations/{$timestamp}_create_acl_tables.php",
             ], 'acl::migrations');
         }
 
@@ -41,10 +42,10 @@ class AclServiceProvider extends ServiceProvider
 
         $this->deleteCacheOnLogout();
 
-        resolve(AclRegistrarContract::class)->registerPermissions();
-
-        $this->app['router']->aliasMiddleware('checkPermission', CheckPermission::class);
-
+        if (Schema::hasTable('permissions')) {
+            resolve(AclRegistrarContract::class)->registerPermissions();
+            $this->app['router']->aliasMiddleware('checkPermission', CheckPermission::class);
+        }
     }
 
     /**
