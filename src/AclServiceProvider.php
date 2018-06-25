@@ -42,10 +42,14 @@ class AclServiceProvider extends ServiceProvider
 
         $this->deleteCacheOnLogout();
 
-        if (Schema::hasTable('permissions')) {
+        if (!App::runningInConsole()) {
+
             resolve(AclRegistrarContract::class)->registerPermissions();
+
             $this->app['router']->aliasMiddleware('checkPermission', CheckPermission::class);
+
         }
+        
     }
 
     /**
