@@ -13,8 +13,6 @@ class UsersController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->userModel = resolve(config('auth.providers.users.model'));
     }
 

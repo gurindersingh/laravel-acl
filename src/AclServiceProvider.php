@@ -3,6 +3,8 @@
 namespace Gurinder\LaravelAcl;
 
 
+use Gurinder\LaravelAcl\Middlewares\PermissionsMiddleware;
+use Gurinder\LaravelAcl\Middlewares\RolesMiddleware;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
@@ -44,8 +46,6 @@ class AclServiceProvider extends ServiceProvider
         if(!App::runningInConsole()) {
 
             resolve(AclRegistrarContract::class)->registerPermissions();
-
-            $this->app['router']->aliasMiddleware('checkPermission', CheckPermission::class);
 
         }
 

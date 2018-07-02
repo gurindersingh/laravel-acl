@@ -10,11 +10,6 @@ use Gurinder\LaravelAcl\Contracts\AclLedgerContract;
 class RolesController extends Controller
 {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function index(AclLedgerContract $ledger)
     {
         $roles = $ledger->getRoles(true, request('page') ?? 1, 15);

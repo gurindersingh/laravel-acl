@@ -9,10 +9,6 @@ use Gurinder\LaravelAcl\Contracts\AclLedgerContract;
 
 class PermissionsController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function index(AclLedgerContract $ledger)
     {

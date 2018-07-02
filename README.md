@@ -180,6 +180,29 @@ class AccessControlListTableSeeder extends Seeder
     }
 }
 ```
+## Using a middleware
+```php
+protected $routeMiddleware = [
+    // ...
+    'permissions'   => \Gurinder\LaravelAcl\Middlewares\PermissionsMiddleware::class,
+    'roles'         => \Gurinder\LaravelAcl\Middlewares\RolesMiddleware::class
+];
+```
+### In Routes
+```php
+Route::group(['middleware' => ['role:super-admin']], function () {
+    //
+});
+
+Route::group(['middleware' => ['permission:manage-users']], function () {
+    //
+});
+
+// Multiple
+Route::group(['middleware' => ['role:super-admin|admin','permission:manage-users|manage-posts']], function () {
+    //
+});
+```
 
 ## License
 
