@@ -6,6 +6,8 @@ namespace Gurinder\LaravelAcl;
 use Gurinder\LaravelAcl\Commands\AssignRoleToUserByEmail;
 use Gurinder\LaravelAcl\Commands\CreatePermission;
 use Gurinder\LaravelAcl\Commands\CreateRole;
+use Gurinder\LaravelAcl\Commands\ListPermissions;
+use Gurinder\LaravelAcl\Commands\ListRoles;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
@@ -54,7 +56,9 @@ class AclServiceProvider extends ServiceProvider
             $this->commands([
                 CreateRole::class,
                 CreatePermission::class,
-                AssignRoleToUserByEmail::class
+                AssignRoleToUserByEmail::class,
+                ListRoles::class,
+                ListPermissions::class,
             ]);
         }
 

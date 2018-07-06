@@ -3,6 +3,7 @@
 namespace Gurinder\LaravelAcl\Commands;
 
 
+use Gurinder\LaravelAcl\Package\Models\Role;
 use Illuminate\Console\Command;
 use Gurinder\LaravelAcl\Package\Models\Permission;
 
@@ -29,7 +30,7 @@ class CreatePermission extends Command
 
         } else {
 
-            $this->error("Permission `{$permission->name}` already exists");
+            $this->error("Permission `{$this->argument('name')}` already exists");
 
         }
 
