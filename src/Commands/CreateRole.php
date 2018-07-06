@@ -23,11 +23,11 @@ class CreateRole extends Command
                 'slug' => $slug
             ]);
 
-            $this->info("Role '`{$role->name}`' created");
+            $this->info("Role `{$role->name}` created");
 
         } else {
 
-            $this->error("Role '`{$role->name}`' already exists");
+            $this->error("Role `{$role->name}` already exists");
 
         }
 

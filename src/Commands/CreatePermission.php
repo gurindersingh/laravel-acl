@@ -23,36 +23,35 @@ class CreatePermission extends Command
                 'slug'  => $slug
             ]);
 
-            $this->attachPermissionToMasterRoles($role, $permission);
+            $this->attachPermissionToMasterRoles($permission->id);
 
-            $this->info("Permission '`{$permission->name}`' created");
+            $this->info("Permission `{$permission->name}` created");
 
         } else {
 
-            $this->error("Permission '`{$permission->name}`' already exists");
+            $this->error("Permission `{$permission->name}` already exists");
 
         }
 
     }
 
     /**
-     * @param $role
-     * @param $permission
+     * @param $permissionId
      */
-    protected function attachPermissionToMasterRoles($role, $permission): void
+    protected function attachPermissionToMasterRoles($permissionId): void
     {
         $roles = config('acl.master_roles');
 
         if (is_string($roles)) {
-            if ($role = Role::whereSlug($role)->first()) {
-                $role->permissions()->attach($permission->id);
+            if ($role = Role::whereSlug($roles)->first()) {
+                $role->permissions()->attach($permissionId);
             }
         }
 
         if(is_array($roles)) {
             foreach ($roles as $role) {
                 if($role = Role::whereSlug($role)->first()) {
-                    $role->permissions()->attach($permission->id);
+                    $role->permissions()->attach($permissionId);
                 }
             }
         }
