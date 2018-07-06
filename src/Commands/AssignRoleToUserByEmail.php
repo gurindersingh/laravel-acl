@@ -4,6 +4,7 @@ namespace Gurinder\LaravelAcl\Commands;
 
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Gurinder\LaravelAcl\Package\Models\Role;
 
 class AssignRoleToUserByEmail extends Command
@@ -22,6 +23,8 @@ class AssignRoleToUserByEmail extends Command
             if ($user = $userModel->where('email', $this->argument('email'))->first()) {
 
                 $user->roles()->attach($role->id);
+
+                Artisan::call('acl:clear');
 
                 $this->info("Role `{$this->argument('roleSlug')}` attached to user of email `{$this->argument('email')}`");
 

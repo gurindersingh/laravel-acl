@@ -4,6 +4,7 @@ namespace Gurinder\LaravelAcl\Commands;
 
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Gurinder\LaravelAcl\Package\Models\Role;
 
 class CreateRole extends Command
@@ -23,7 +24,11 @@ class CreateRole extends Command
                 'slug' => $slug
             ]);
 
+            Artisan::call('acl:clear');
+
             $this->info("Role `{$role->name}` created");
+
+
 
         } else {
 

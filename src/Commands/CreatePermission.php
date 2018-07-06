@@ -3,8 +3,9 @@
 namespace Gurinder\LaravelAcl\Commands;
 
 
-use Gurinder\LaravelAcl\Package\Models\Role;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Gurinder\LaravelAcl\Package\Models\Role;
 use Gurinder\LaravelAcl\Package\Models\Permission;
 
 class CreatePermission extends Command
@@ -25,6 +26,8 @@ class CreatePermission extends Command
             ]);
 
             $this->attachPermissionToMasterRoles($permission->id);
+
+            Artisan::call('acl:clear');
 
             $this->info("Permission `{$permission->name}` created");
 
