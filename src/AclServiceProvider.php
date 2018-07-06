@@ -3,6 +3,9 @@
 namespace Gurinder\LaravelAcl;
 
 
+use Gurinder\LaravelAcl\Commands\AssignRoleToUserByEmail;
+use Gurinder\LaravelAcl\Commands\CreatePermission;
+use Gurinder\LaravelAcl\Commands\CreateRole;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
@@ -41,10 +44,18 @@ class AclServiceProvider extends ServiceProvider
 
         $this->deleteCacheOnLogout();
 
-        if(!App::runningInConsole()) {
+        if (!App::runningInConsole()) {
 
             resolve(AclRegistrarContract::class)->registerPermissions();
 
+        }
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CreateRole::class,
+                CreatePermission::class,
+                AssignRoleToUserByEmail::class
+            ]);
         }
 
     }

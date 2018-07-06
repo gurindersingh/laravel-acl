@@ -29,6 +29,15 @@ class Role extends Model
 
     protected $appends = ['editable'];
 
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //
+    //     static::created(function ($role) {
+    //         $userModel = resolve(config('auth.providers.users.model'));
+    //     });
+    // }
+
     /**
      * The users that belong to the role.
      */

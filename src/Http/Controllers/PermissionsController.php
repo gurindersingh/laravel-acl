@@ -46,7 +46,7 @@ class PermissionsController extends Controller
             'slug' => $slug
         ]);
 
-        $this->assignPermissionToMasterRoles($permission);
+        $this->attachPermissionToMasterRoles($permission);
 
         $ledger->reset();
 
@@ -68,7 +68,7 @@ class PermissionsController extends Controller
         return redirect()->route(config('acl.route_as') . 'permissions.index');
     }
 
-    protected function assignPermissionToMasterRoles($permission)
+    protected function attachPermissionToMasterRoles($permission)
     {
         $roles = config('acl.master_roles');
 
