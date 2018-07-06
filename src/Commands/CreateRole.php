@@ -3,9 +3,10 @@
 namespace Gurinder\LaravelAcl\Commands;
 
 
+use Illuminate\Console\Command;
 use Gurinder\LaravelAcl\Package\Models\Role;
 
-class CreateRole
+class CreateRole extends Command
 {
     protected $signature = 'role:create {name : The name of the role - Name Only}';
 
@@ -19,14 +20,17 @@ class CreateRole
 
             $role = Role::create([
                 'name' => $this->argument('name'),
-                'slug'  => $slug
+                'slug' => $slug
             ]);
 
-            return $this->info("Role '`{$role->name}`' created");
+            $this->info("Role '`{$role->name}`' created");
+
+        } else {
+
+            $this->error("Role '`{$role->name}`' already exists");
 
         }
 
-        $this->error("Role '`{$role->name}`' already exists");
 
     }
 }

@@ -3,9 +3,10 @@
 namespace Gurinder\LaravelAcl\Commands;
 
 
+use Illuminate\Console\Command;
 use Gurinder\LaravelAcl\Package\Models\Permission;
 
-class CreatePermission
+class CreatePermission extends Command
 {
     protected $signature = 'permission:create {name : The name of the permission - Name Only}';
 
@@ -24,11 +25,13 @@ class CreatePermission
 
             $this->attachPermissionToMasterRoles($role, $permission);
 
-            return $this->info("Permission '`{$permission->name}`' created");
+            $this->info("Permission '`{$permission->name}`' created");
+
+        } else {
+
+            $this->error("Permission '`{$permission->name}`' already exists");
 
         }
-
-        return $this->error("Permission '`{$permission->name}`' already exists");
 
     }
 
