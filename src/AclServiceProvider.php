@@ -3,6 +3,7 @@
 namespace Gurinder\LaravelAcl;
 
 
+use Gurinder\LaravelAcl\Commands\AclCacheClear;
 use Gurinder\LaravelAcl\Commands\AssignRoleToUserByEmail;
 use Gurinder\LaravelAcl\Commands\CreatePermission;
 use Gurinder\LaravelAcl\Commands\CreateRole;
@@ -59,6 +60,7 @@ class AclServiceProvider extends ServiceProvider
                 AssignRoleToUserByEmail::class,
                 ListRoles::class,
                 ListPermissions::class,
+                AclCacheClear::class,
             ]);
         }
 

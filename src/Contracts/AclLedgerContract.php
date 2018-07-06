@@ -40,5 +40,11 @@ interface AclLedgerContract
      * @param $user
      * @return mixed
      */
+    public function resetUserAcl($user);
+
+    /**
+     * @param $user
+     * @return mixed
+     */
     public function getUserAcl($user);
 }
