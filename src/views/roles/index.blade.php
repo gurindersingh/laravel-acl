@@ -1,4 +1,8 @@
-@extends('acl::acl-master')
+@if(view()->exists('layouts.acl-master'))
+	@extends('layouts.acl-master')
+@else
+	@extends('acl::acl-master')
+@endif
 
 @section('acl::content')
 	
