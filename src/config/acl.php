@@ -4,6 +4,8 @@ return [
 
     'cache_key' => 'gurinder.laravel-acl',
 
+    'custom_views' => true,
+
     'cache_expiration_time' => 60 * 24,
 
     'route_prefix' => 'admin',

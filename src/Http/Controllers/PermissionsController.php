@@ -14,11 +14,19 @@ class PermissionsController extends Controller
     {
         $permissions = $ledger->getPermissions(true, request('page') ?? 1, 15);
 
+        if(config('acl.custom_views')) {
+            return view('acl.permissions.index', compact('permissions'));
+        }
+
         return view('acl::permissions.index', compact('permissions'));
     }
 
     public function create()
     {
+        if(config('acl.custom_views')) {
+            return view('acl.permissions.create');
+        }
+
         return view('acl::permissions.create');
     }
 

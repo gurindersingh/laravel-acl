@@ -14,6 +14,10 @@ class RolesController extends Controller
     {
         $roles = $ledger->getRoles(true, request('page') ?? 1, 15);
 
+        if(config('acl.custom_views')) {
+            return view('acl.roles.index', compact('roles'));
+        }
+
         return view('acl::roles.index', compact('roles'));
     }
 
@@ -21,7 +25,13 @@ class RolesController extends Controller
     {
         $permissions = $ledger->getPermissions()->groupByFirstLetter('name');
 
+
+        if(config('acl.custom_views')) {
+            return view('acl.roles.create', compact('permissions'));
+        }
+
         return view('acl::roles.create', compact('permissions'));
+        
     }
 
     public function store(Request $request, AclLedgerContract $ledger)
@@ -61,11 +71,15 @@ class RolesController extends Controller
     {
         $role = Role::whereId($role)->with(['permissions'])->firstOrFail();
 
-        if (collect(config('acl.freezed_roles'))->contains($role->slug)) {
+        if (!isAdmin() && collect(config('acl.freezed_roles'))->contains($role->slug)) {
             abort(403, "This role can not be edited");
         }
 
         $permissions = Permission::get()->groupByFirstLetter('name');
+
+        if(config('acl.custom_views')) {
+            return view('acl.roles.edit', compact('role', 'permissions'));
+        }
 
         return view('acl::roles.edit', compact('role', 'permissions'));
     }
