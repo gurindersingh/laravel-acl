@@ -23,7 +23,7 @@ Run migration
 ```bash
 php artisan migrate
 ```
-## Config File
+## Step 4 - Config File
 Configuration file information
 
 ```php
@@ -65,9 +65,36 @@ return [
 
 ];
 ```
+## Step 5 - Add function
+Add required function to your `helpers.php` file
+```php
+if (!function_exists('isAdmin')) {
+
+    /**
+     * Check if user is admin admin
+     *
+     * @param \App\Models\User|null $user
+     * @return bool
+     */
+    function isAdmin(\App\Models\User $user = null)
+    {
+        return $user ? $user->isAdmin() : (auth()->check() && auth()->user()->isAdmin());
+    }
+
+}
+```
+
+## Step 6 - Add middleware
+```php
+protected $routeMiddleware = [
+    // ...
+    'permissions'   => \Gurinder\LaravelAcl\Middlewares\PermissionsMiddleware::class,
+    'roles'         => \Gurinder\LaravelAcl\Middlewares\RolesMiddleware::class
+];
+```
 
 ## Usage
-Add `AclGuarded` Trait to your user model
+Add `AclGuarded` Trait to your user model & `isAdmin()` to your `User` model
 ```php
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -180,14 +207,7 @@ class AccessControlListTableSeeder extends Seeder
     }
 }
 ```
-## Using a middleware
-```php
-protected $routeMiddleware = [
-    // ...
-    'permissions'   => \Gurinder\LaravelAcl\Middlewares\PermissionsMiddleware::class,
-    'roles'         => \Gurinder\LaravelAcl\Middlewares\RolesMiddleware::class
-];
-```
+
 ### In Routes
 ```php
 Route::group(['middleware' => ['role:super-admin']], function () {

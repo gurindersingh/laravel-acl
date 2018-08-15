@@ -31,7 +31,7 @@ class UsersController extends Controller
 
         $users = $query->paginate(10);
 
-        if(config('acl.custom_views')) {
+        if(config('acl.custom_views') && view()->exists('acl.users.index')) {
             return view('acl.users.index', compact('users'));
         }
 
@@ -44,7 +44,7 @@ class UsersController extends Controller
 
         $roles = $ledger->getRoles();
 
-        if(config('acl.custom_views')) {
+        if(config('acl.custom_views') && view()->exists('acl.users.edit')) {
             return view('acl.users.edit', compact('user', 'roles'));
         }
 

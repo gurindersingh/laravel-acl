@@ -102,4 +102,14 @@ trait AclGuarded
         return false;
     }
 
+    /**
+     * Check if user is admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
 }

@@ -12,9 +12,11 @@ class RolesController extends Controller
 
     public function index(AclLedgerContract $ledger)
     {
+
         $roles = $ledger->getRoles(true, request('page') ?? 1, 15);
 
-        if(config('acl.custom_views')) {
+
+        if(config('acl.custom_views') && view()->exists('acl.roles.index')) {
             return view('acl.roles.index', compact('roles'));
         }
 
@@ -26,7 +28,7 @@ class RolesController extends Controller
         $permissions = $ledger->getPermissions()->groupByFirstLetter('name');
 
 
-        if(config('acl.custom_views')) {
+        if(config('acl.custom_views') && view()->exists('acl.roles.create')) {
             return view('acl.roles.create', compact('permissions'));
         }
 
@@ -77,7 +79,7 @@ class RolesController extends Controller
 
         $permissions = Permission::get()->groupByFirstLetter('name');
 
-        if(config('acl.custom_views')) {
+        if(config('acl.custom_views') && view()->exists('acl.roles.edit')) {
             return view('acl.roles.edit', compact('role', 'permissions'));
         }
 
