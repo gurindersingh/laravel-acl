@@ -4,9 +4,11 @@ namespace Gurinder\LaravelAcl\Package\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Role extends Model
 {
+    use Sluggable;
 
     /**
      * @var array
@@ -28,15 +30,6 @@ class Role extends Model
     ];
 
     protected $appends = ['editable'];
-
-    // public static function boot()
-    // {
-    //     parent::boot();
-    //
-    //     static::created(function ($role) {
-    //         $userModel = resolve(config('auth.providers.users.model'));
-    //     });
-    // }
 
     /**
      * The users that belong to the role.
@@ -94,5 +87,19 @@ class Role extends Model
     public function getFreezedRolesSlug()
     {
         return ['admin'];
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => ['name']
+            ]
+        ];
     }
 }

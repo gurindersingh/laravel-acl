@@ -3,12 +3,13 @@ namespace Gurinder\LaravelAcl\Package\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Permission extends Model
 {
-    protected $guarded = [];
+    use Sluggable;
 
-    protected $slugSource = 'name';
+    protected $guarded = [];
 
     /**
      * @var string
@@ -52,5 +53,19 @@ class Permission extends Model
     public function getFreezedPermissionsSlug()
     {
         return ['manage-acl'];
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => ['name']
+            ]
+        ];
     }
 }
